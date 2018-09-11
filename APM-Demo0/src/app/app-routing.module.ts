@@ -16,6 +16,7 @@ const appRoutes: Routes = [
       {
         path: 'products',
         // canActivate: [AuthGuard],
+        // lazy loading
         loadChildren: './products/product.module#ProductModule'
       },
       { path: '', redirectTo: 'welcome', pathMatch: 'full' },
