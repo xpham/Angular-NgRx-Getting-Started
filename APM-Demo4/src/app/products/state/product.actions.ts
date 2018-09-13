@@ -9,16 +9,16 @@ export enum ProductActionTypes {
   ClearCurrentProduct = '[Product] Clear Current Product',
   InitializeCurrentProduct = '[Product] Initialize Current Product',
   Load = '[Product] Load',
-  LoadSuccess = '[Product] Load Success',
+  LoadSuccess = '[Product] Load LoadSuccess',
   LoadFail = '[Product] Load Fail',
   UpdateProduct = '[Product] Update Product',
-  UpdateProductSuccess = '[Product] Update Product Success',
+  UpdateProductSuccess = '[Product] Update Product LoadSuccess',
   UpdateProductFail = '[Product] Update Product Fail',
   CreateProduct = '[Product] Create Product',
-  CreateProductSuccess = '[Product] Create Product Success',
+  CreateProductSuccess = '[Product] Create Product LoadSuccess',
   CreateProductFail = '[Product] Create Product Fail',
   DeleteProduct = '[Product] Delete Product',
-  DeleteProductSuccess = '[Product] Delete Product Success',
+  DeleteProductSuccess = '[Product] Delete Product LoadSuccess',
   DeleteProductFail = '[Product] Delete Product Fail'
 }
 

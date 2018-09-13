@@ -9,7 +9,7 @@ export enum ProductActionTypes {
   ClearCurrentProduct = '[Product] Clear Current Product',
   InitializeCurrentProduct = '[Product] Initialize Current Product',
   Load = '[Product] Load',
-  LoadSuccess = '[Product] Load Success',
+  LoadSuccess = '[Product] Load LoadSuccess',
   LoadFail = '[Product] Load Fail'
 }
 

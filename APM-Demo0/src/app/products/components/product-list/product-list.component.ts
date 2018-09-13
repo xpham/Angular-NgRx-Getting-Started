@@ -2,13 +2,12 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 
 import {Subscription} from 'rxjs';
 
-import {Product} from '../product';
-import {ProductService} from '../product.service';
+import {Product} from '../../product';
+import {ProductService} from '../../product.service';
 import {select, Store} from "@ngrx/store";
 
-import * as fromProduct from '../state/product.reducer';
-import * as productActions from '../state/product.actions';
-import {LoadSuccess} from "../state/product.actions";
+import * as fromProduct from '../../state/product.reducer';
+import * as productActions from '../../state/product.actions';
 
 @Component({
   selector: 'pm-product-list',
@@ -34,12 +33,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
     // Select Product
     // TODO: Unsubscribe
-    this.sub = this.productService.selectedProductChanges$.subscribe(
-      selectedProduct => this.selectedProduct = selectedProduct
-    );
-    // this.store.pipe(select(fromProduct.getCurrentProduct)).subscribe(currentProduct => {
-    //   this.selectedProduct = currentProduct;
-    // })
+    // this.sub = this.productService.selectedProductChanges$.subscribe(
+    //   selectedProduct => this.selectedProduct = selectedProduct
+    // );
 
     // Get Products
     // this.productService.getProducts().subscribe(
@@ -53,10 +49,16 @@ export class ProductListComponent implements OnInit, OnDestroy {
     // [Effects] call dispatch method
     this.store.dispatch(new productActions.LoadCompletion());
 
-    // [Effects] select state with selector
-    this.store.pipe(select(fromProduct.getProducts)).subscribe(products => {
-      this.products = products;
+    // [Effects] call dispatch method
+    this.store.pipe(select(fromProduct.getCurrentProduct)).subscribe(currentProduct => {
+      this.selectedProduct = currentProduct;
     })
+
+    // [Effects] select state with selector
+    this.store.pipe(select(fromProduct.getProducts))
+      .subscribe((products: Product[]) => {
+        this.products = products;
+      })
 
     // Get flag ShowProductCode
     // TODO: Unsubscribe
@@ -80,13 +82,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   newProduct(): void {
-    // this.productService.changeSelectedProduct(this.productService.newProduct());
-    this.store.dispatch(new productActions.InitializeCurrentProduct());
+    this.productService.changeSelectedProduct(this.productService.newProduct());
+    // this.store.dispatch(new productActions.InitializeCurrentProduct());
   }
 
   productSelected(product: Product): void {
-    // this.productService.changeSelectedProduct(product);
-    this.store.dispatch(new productActions.SetCurrentProduct(product));
+    this.productService.changeSelectedProduct(product);
+    // this.store.dispatch(new productActions.SetCurrentProduct(product));
   }
 
 }

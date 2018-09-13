@@ -4,13 +4,18 @@ import {Product} from "../product";
 export enum ProductActionTypes {
   ToggleProductCode = '[Product] Toggle Product Code',
   SetCurrentProduct = '[Product] Set Current Product',
-  ClearCurrentProduct = '[Product] Toggle Product Code',
-  InitializeCurrentProduct = '[Product] Toggle Product Code',
+  ClearCurrentProduct = '[Product] Clear Current Product',
+  InitializeCurrentProduct = '[Product] Initialize Current Product',
 
   // Actions for complexed operations
   LoadCompletion = '[Product] LoadCompletion',
   LoadSuccess = '[Product] LoadSuccess',
-  LoadFailed = '[Product] LoadFailed'
+  LoadFailed = '[Product] LoadFailed',
+
+  // Actions for complexed update operation
+  UpdateProduct = '[Product] Update Product',
+  UpdateProductSuccess = '[Product] Update Product Success',
+  UpdateProductFailed = '[Product] Update Product Failed'
 }
 
 export class ToggleProductCode implements Action {
@@ -53,6 +58,27 @@ export class LoadFailed implements Action {
   }
 }
 
+export class UpdateProduct implements Action {
+  readonly type = ProductActionTypes.UpdateProduct;
+
+  constructor(public payload: Product) {
+  }
+}
+
+export class UpdateProductSuccess implements Action {
+  readonly type = ProductActionTypes.UpdateProductSuccess;
+
+  constructor(public payload: Product) {
+  }
+}
+
+export class UpdateProductFailed implements Action {
+  readonly type = ProductActionTypes.UpdateProductFailed;
+
+  constructor(public payload: string) {
+  }
+}
+
 export type ProductActions =
   ToggleProductCode
   | SetCurrentProduct
@@ -60,4 +86,7 @@ export type ProductActions =
   | InitializeCurrentProduct
   | LoadCompletion
   | LoadSuccess
-  | LoadFailed;
+  | LoadFailed
+  | UpdateProduct
+  | UpdateProductSuccess
+  | UpdateProductFailed;

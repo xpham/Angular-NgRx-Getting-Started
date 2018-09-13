@@ -1,8 +1,13 @@
 import {Injectable} from "@angular/core";
 import {Actions, Effect, ofType} from "@ngrx/effects";
-import {LoadSuccess, ProductActionTypes} from "./product.actions";
 import {ProductService} from "../product.service";
-import {map, mergeMap} from "rxjs/internal/operators";
+import {catchError, map, mergeMap} from "rxjs/internal/operators";
+import {of} from "rxjs/index";
+
+import {LoadSuccess, ProductActionTypes} from "./product.actions";
+import * as productActions from '../state/product.actions';
+import {Product} from "../product";
+
 
 @Injectable()
 export class ProductEffects {
@@ -20,9 +25,23 @@ export class ProductEffects {
       mergeMap(action =>
         this.productService.getProducts().pipe(
           // 3- return a new action
-          map(products => (new LoadSuccess(products)))
+          map(products => (new LoadSuccess(products))),
+          catchError(err => of(new productActions.LoadFailed(err)))
         ))
     )
+
+  @Effect()
+  updateProduct = this.actions$
+    .pipe(
+      ofType(ProductActionTypes.UpdateProduct),
+      map((action: productActions.UpdateProduct) => action.payload),
+      mergeMap((product: Product) =>
+        this.productService.updateProduct(product).pipe(
+          map(updatedProduct => (new productActions.UpdateProductSuccess(updatedProduct))),
+          catchError(err => of(new productActions.UpdateProductFailed(err)))
+        )
+      )
+    );
 
   constructor(private actions$: Actions, private productService: ProductService) {
   }
