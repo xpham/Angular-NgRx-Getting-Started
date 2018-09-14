@@ -1,15 +1,15 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, Input} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 import {Subscription} from 'rxjs';
 
-import {Product} from '../../../product';
-import {ProductService} from '../../../product.service';
-import {GenericValidator} from '../../../../shared/generic-validator';
-import {NumberValidators} from '../../../../shared/number.validator';
+import {Product} from '../../product';
+import {ProductService} from '../../product.service';
+import {GenericValidator} from '../../../shared/generic-validator';
+import {NumberValidators} from '../../../shared/number.validator';
 
-import * as fromProduct from '../../../state/product.reducer';
-import * as productActions from '../../../state/product.actions';
+import * as fromProduct from '../../state/product.reducer';
+import * as productActions from '../../state/product.actions';
 import {Store} from "@ngrx/store";
 
 @Component({
@@ -22,7 +22,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
   errorMessage = '';
   productForm: FormGroup;
 
-  product: Product | null;
+  @Input() product: Product | null;
   sub: Subscription;
 
   // Use with the generic validation message class
